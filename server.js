@@ -28,7 +28,7 @@ app.get('/:datestring', (req, res) => {
       date = new Date(Number(datestring));
     }
     if (date.getDate() != date.getDate()) {
-      res.end({unix: null, natural: null});
+      res.end(JSON.stringify({unix: null, natural: null}));
       return;
     }
     let out = {
@@ -39,6 +39,8 @@ app.get('/:datestring', (req, res) => {
     res.end(JSON.stringify(out));
   } catch (e) {
     console.log(e);
+    res.writeHead(500);
+    res.end(e.toString());
     process.exit(1);
   }
 });
